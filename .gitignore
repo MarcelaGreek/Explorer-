@@ -1,0 +1,60 @@
+# ---- Secrets / environment variables (NEVER commit real keys) ----
+# Catches .env, .env.local, .env.production, .env.local2.txt, etc.
+.env
+.env.*
+# ...but allow a safe, key-less template to be committed:
+!.env.example
+
+# ---- Dependencies ----
+node_modules/
+.pnpm-store/
+
+# ---- Next.js / build outputs ----
+.next/
+out/
+build/
+dist/
+coverage/
+next-env.d.ts
+*.tsbuildinfo
+
+# ---- v0 sandbox internal files ----
+__v0_runtime_loader.js
+__v0_devtools.tsx
+__v0_jsx-dev-runtime.ts
+.snowflake/
+.v0-trash/
+.vercel/
+
+# ---- Logs ----
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---- Caches / temp ----
+.cache/
+tmp/
+temp/
+*.tmp
+.eslintcache
+
+# ---- OS files ----
+.DS_Store
+Thumbs.db
+
+# ---- IDEs / editors ----
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ---- Local-only docs (plain-text copy of README.md) ----
+README.txt
+
+# ---- Local-only files (not for the public repo) ----
+tracer_project_general_prompt.txt
+GIT-STEPS.txt
+push.sh
