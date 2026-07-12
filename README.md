@@ -175,3 +175,478 @@ lib/
   their results for conclusions.
 - **RLS is not yet enabled** on the underlying tables (fine for testing with placeholder data;
   tighten before using real data — see Security notes).
+
+
+  STEPS
+  RACE EXPLORER — COMPLETE WINDOWS 11 SETUP STEPS
+================================================
+
+1. WHAT THIS PROJECT IS
+-----------------------
+
+Trace Explorer is a Next.js / React / TypeScript application.
+
+It is NOT a Python application.
+
+The project reads data already stored in Supabase and displays:
+- agent traces
+- filters
+- saved research-question views
+- trace details
+- CSV export
+- optional semantic-search results
+
+2. REQUIRED STACK
+-----------------
+
+Required:
+- Windows 11
+- Node.js 20 or newer
+- Node.js 22 LTS recommended
+- pnpm
+- Internet connection
+- A working Supabase project
+- Supabase URL
+- Supabase anon/public key
+
+Optional:
+- OpenAI API key, only for semantic search
+- Visual Studio Code
+- Git
+
+3. NOT NEEDED FOR THIS EXPLORER FOLDER
+--------------------------------------
+
+Not needed:
+- requirements.txt
+- pip install
+- Python virtual environment
+- Python evaluator scripts
+- raw CSV input files
+- automatic Supabase upload script
+- Python embedding-generation scripts
+
+Important:
+- Node.js IS required.
+- pnpm IS required.
+- package.json is the Node.js equivalent of requirements.txt.
+- pnpm-lock.yaml records the installed dependency versions.
+- The Next.js semantic API route inside app/api/semantic-search belongs in this project.
+- The separate Python project that creates embeddings belongs elsewhere.
+
+4. IMPORTANT ENVIRONMENT FILE RULE
+----------------------------------
+
+The real local environment file must be named exactly:
+
+.env.local
+
+Do not use .env for the final local setup.
+
+Keep .env.example in GitHub only as documentation.
+
+The .env.local file must be in the same folder as package.json.
+
+Do not commit .env.local to GitHub.
+
+5. REQUIRED ENVIRONMENT VARIABLES
+---------------------------------
+
+Create .env.local with:
+
+NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
+OPENAI_API_KEY=YOUR_OPENAI_API_KEY
+SUPABASE_SERVER_KEY=
+
+Notes:
+- Use the exact variable names.
+- Do not add spaces around =.
+- Do not add quotation marks.
+- NEXT_PUBLIC_SUPABASE_URL must be the Supabase Project URL.
+- NEXT_PUBLIC_SUPABASE_ANON_KEY must be the anon/public key.
+- OPENAI_API_KEY is required only for semantic search.
+- SUPABASE_SERVER_KEY is optional and can remain empty.
+- Restart pnpm dev after changing .env.local.
+- Never place real keys in .env.example.
+- Never commit .env.local.
+
+6. OPEN THE PROJECT ROOT
+------------------------
+
+Open Command Prompt or PowerShell.
+
+Go to the folder containing package.json.
+
+Example:
+
+cd "C:\Users\marce\Documents\000 Logs and traces\Explorer_ok\Explorer--main\Explorer--main"
+
+Confirm:
+
+dir package.json
+
+Do not run pnpm commands inside app, components, or lib.
+Run them from the project root.
+
+7. CHECK NODE.JS
+----------------
+
+Run:
+
+node --version
+npm --version
+
+If both commands return version numbers, Node.js is installed.
+
+Your current installation:
+
+Node.js: v24.18.0
+npm: 11.16.0
+
+This is sufficient to run the project.
+
+8. INSTALL NODE.JS IF MISSING
+-----------------------------
+
+Run:
+
+winget install OpenJS.NodeJS.LTS
+
+Then close and reopen the terminal.
+
+Verify:
+
+node --version
+npm --version
+
+9. CHECK PNPM
+-------------
+
+Run:
+
+pnpm --version
+
+Your current pnpm version:
+
+pnpm: 11.10.0
+
+If pnpm is not available, run:
+
+corepack enable
+corepack prepare pnpm@latest --activate
+pnpm --version
+
+No Python virtual environment is needed.
+
+10. CREATE .env.local
+---------------------
+
+From the project root:
+
+copy .env.example .env.local
+
+Open it:
+
+notepad .env.local
+
+Replace the placeholder values with the real values.
+
+Example structure:
+
+NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
+OPENAI_API_KEY=YOUR_OPENAI_API_KEY
+SUPABASE_SERVER_KEY=
+
+Save and close Notepad.
+
+Confirm the filename:
+
+dir /a
+
+You must see:
+
+.env.local
+
+It must not be:
+
+.env
+.env.local.txt
+.env.txt
+
+11. INSTALL PROJECT DEPENDENCIES
+--------------------------------
+
+Run:
+
+pnpm install
+
+This reads:
+- package.json
+- pnpm-lock.yaml
+
+It creates:
+- node_modules
+- local dependency files
+
+Do not copy node_modules from another computer.
+Always rebuild it with pnpm install.
+
+A pnpm warning about pnpm.overrides is not fatal for running the app.
+
+12. START THE DEVELOPMENT SERVER
+--------------------------------
+
+Run:
+
+pnpm dev
+
+Expected terminal output includes:
+
+Environments: .env.local
+Ready
+Local: http://localhost:3000
+
+Open:
+
+http://localhost:3000
+
+Keep the terminal open while using the app.
+
+Stop the server with:
+
+Ctrl+C
+
+13. HARD REFRESH THE BROWSER
+----------------------------
+
+In Chrome on Windows:
+
+Ctrl+Shift+R
+
+or:
+
+Ctrl+F5
+
+Do not use Ctrl+K.
+
+14. CLEAR THE NEXT.JS CACHE
+---------------------------
+
+Only do this if the app appears to use old configuration.
+
+Stop the server:
+
+Ctrl+C
+
+Delete the cache:
+
+rmdir /s /q .next
+
+Restart:
+
+pnpm dev
+
+If Windows says:
+
+The system cannot find the file specified.
+
+that means the .next cache is already absent.
+
+15. VERIFY SUPABASE CONFIGURATION
+---------------------------------
+
+If the app shows:
+
+Supabase is not configured
+
+check that .env.local contains exactly:
+
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+
+Then:
+
+1. Stop the server with Ctrl+C.
+2. Save .env.local.
+3. Delete .next if necessary.
+4. Run pnpm dev again.
+5. Hard refresh the browser.
+
+This error is about missing environment variables.
+It is not caused by RLS.
+It is not caused by the absence of a service-role key.
+
+16. FUNCTIONAL TEST
+-------------------
+
+Confirm:
+
+- The app opens at localhost:3000.
+- All traces load from trace2_agent_traces.
+- The research-question dropdown loads.
+- Selecting a saved question returns rows.
+- Filters work.
+- Row details open.
+- CSV export works.
+
+Semantic search requires:
+- OPENAI_API_KEY
+- trace2_embeddings in Supabase
+- match_trace2_traces RPC
+- app/api/semantic-search/route.ts
+
+17. TYPE AND BUILD CHECK
+------------------------
+
+Run:
+
+pnpm exec tsc --noEmit
+
+Then:
+
+pnpm build
+
+If successful, test production mode:
+
+pnpm start
+
+Open:
+
+http://localhost:3000
+
+Stop with:
+
+Ctrl+C
+
+18. COMMON ERRORS
+-----------------
+
+ERROR: node is not recognized
+- Install Node.js.
+- Close and reopen the terminal.
+
+ERROR: pnpm is not recognized
+- Run:
+  corepack enable
+  corepack prepare pnpm@latest --activate
+
+ERROR: package.json not found
+- You are in the wrong folder.
+- Move to the project root.
+
+ERROR: Supabase is not configured
+- Check .env.local.
+- Check exact variable names.
+- Restart pnpm dev.
+
+ERROR: Port 3000 is already in use
+- Stop the other server, or run:
+
+pnpm dev -- --port 3001
+
+Then open:
+
+http://localhost:3001
+
+ERROR: Module not found
+- Run pnpm install.
+- Confirm all app, components, components/ui, and lib files exist.
+
+19. MINIMUM REQUIRED PROJECT FILES
+---------------------------------
+
+The project should contain:
+
+app/
+  page.tsx
+  layout.tsx
+  globals.css
+  api/
+    semantic-search/
+      route.ts
+
+components/
+  trace-explorer.tsx
+  question-sidebar.tsx
+  semantic-search-box.tsx
+  trace-list.tsx
+  trace-detail.tsx
+  badges.tsx
+  ui/
+
+lib/
+  supabase/
+    client.ts
+    server.ts
+  research-questions.ts
+  filters.ts
+  filter-options.ts
+  quick-filters.ts
+  types.ts
+  utils.ts
+
+public/
+
+.env.example
+.gitignore
+components.json
+next.config.mjs
+package.json
+pnpm-lock.yaml
+pnpm-workspace.yaml
+postcss.config.mjs
+README.md
+tsconfig.json
+
+Local only:
+
+.env.local
+node_modules/
+.next/
+
+20. COMPLETE CONSOLE SEQUENCE
+-----------------------------
+
+cd "C:\Users\marce\Documents\000 Logs and traces\Explorer_ok\Explorer--main\Explorer--main"
+
+node --version
+npm --version
+pnpm --version
+
+copy .env.example .env.local
+notepad .env.local
+
+pnpm install
+pnpm exec tsc --noEmit
+pnpm dev
+
+Open:
+
+http://localhost:3000
+
+For a production check:
+
+Ctrl+C
+pnpm build
+pnpm start
+
+21. FINAL STATUS
+----------------
+
+The Explorer project does not use requirements.txt.
+
+Its dependency system is:
+
+package.json
+pnpm-lock.yaml
+pnpm install
+
+The correct local secrets file is:
+
+.env.local
+
+The standard command to run the application is:
+
+pnpm dev
